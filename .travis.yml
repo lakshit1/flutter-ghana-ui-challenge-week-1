@@ -22,11 +22,11 @@ addons:
       - libstdc++6
       - curl
 
-#before_install:
+before_install:
   
-  #- chmod +x ./.travis/10_prebuild.sh ./.travis/30_generate_vendor_config.sh ./.travis/40_postbuild.sh
+  - chmod +x ./.travis/10_prebuild.sh ./.travis/30_generate_vendor_config.sh ./.travis/40_postbuild.sh
   # Execute ApolloTV prebuild webhook.
-  #- ./.travis/10_prebuild.sh $WEBHOOK_URL
+  - ./.travis/10_prebuild.sh $WEBHOOK_URL
 
 before_script:
   # Setup gradle.
@@ -53,7 +53,7 @@ before_script:
   - mkdir -p `pwd`/lib/vendor/dist/
   # Inject build configuration
   #- yes | cp -r ./android/app/build.gradle
-  #- ./.travis/30_generate_vendor_config.sh $TMDB_KEY $TRAKT_ID $TRAKT_SECRET $CLAWS_URL_BETA $CLAWS_KEY_BETA $VENDOR_NAME $TRAVIS_BUILD_NUMBER > `pwd`/lib/vendor/dist/OfficialVendorConfiguration.dart
+  - ./.travis/30_generate_vendor_config.sh $TMDB_KEY $TRAKT_ID $TRAKT_SECRET $CLAWS_URL_BETA $CLAWS_KEY_BETA $VENDOR_NAME $TRAVIS_BUILD_NUMBER > `pwd`/lib/vendor/dist/OfficialVendorConfiguration.dart
 
 script:
   # Get Flutter information
@@ -74,7 +74,7 @@ after_success:
   - npm install --save @wetransfer/js-sdk
   - export BUILD_OUTPUT_URL=`node ./.travis/utils/runUpload.js`
   # Post in chat
-  #- ./.travis/40_postbuild.sh success $WEBHOOK_URL $BUILD_OUTPUT_URL
+  - ./.travis/40_postbuild.sh success $WEBHOOK_URL $BUILD_OUTPUT_URL
 
-#after_failure:
-  #- ./.travis/40_postbuild.sh failure $WEBHOOK_URL
+after_failure:
+  - ./.travis/40_postbuild.sh failure $WEBHOOK_URL
