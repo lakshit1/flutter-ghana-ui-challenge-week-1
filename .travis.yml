@@ -52,17 +52,15 @@ before_script:
   - export PATH=`pwd`/flutter/bin:`pwd`/flutter/bin/cache/dart-sdk/bin:$PATH
   - mkdir -p `pwd`/lib/vendor/dist/
   # Inject build configuration
-  #- yes | cp -r ./android/app/build.gradle
+  - yes | cp -r ./android/app/build.gradle
   - ./.travis/30_generate_vendor_config.sh $TMDB_KEY $TRAKT_ID $TRAKT_SECRET $CLAWS_URL_BETA $CLAWS_KEY_BETA $VENDOR_NAME $TRAVIS_BUILD_NUMBER > `pwd`/lib/vendor/dist/OfficialVendorConfiguration.dart
 
 script:
   # Get Flutter information
-  - flutter doctor -v
+  - flutter doctor
   # Run Flutter build
-  - ./flutter/bin/fluttet pub get
-  - ./flutter/bin/flutter pub upgrade
   - ./flutter/bin/flutter pub get
-  - ./flutter/bin/flutter build apk -v
+  - ./flutter/bin/flutter build apk
 
 after_success:
   # Export commit info
