@@ -21,5 +21,4 @@ jobs:
         channel: 'stable' # or: 'dev' or 'beta' 
     - run: |
         flutter pub get 
-        flutter test 
         flutter build apk
